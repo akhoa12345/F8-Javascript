@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body>div {
+            margin: 5% auto 0;
+            max-width: 720px;
+        }
+
+        .tabs {
+            display: flex;
+            position: relative;
+        }
+
+        .tabs .line {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 6px;
+            border-radius: 15px;
+            background-color: #000;
+            transition: all 0.2s ease;
+        }
+
+        .tab-item {
+            min-width: 80px;
+            padding: 16px 20px 11px 20px;
+            font-size: 20px;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            border-bottom: 5px solid transparent;
+            opacity: 0.6;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .tab-item.active {
+            opacity: 1;
+        }
+
+        .tab-icon {
+            font-size: 24px;
+            width: 32px;
+            position: relative;
+            top: 2px;
+        }
+
+        .darkmode {
+            background-color: #121212;
+            color: #fff;
+        }
+
+        .dark:hover {
+            background-color: #121212;
+            color: #fff;
+        }
+
+        .light:hover {
+            background-color: yellow;
+            color: #000;
+        }
+
+        .tab-content {
+            padding: 28px 0;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .tab-pane h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="tabs">
+            <div class="tab-item active light">
+                <i class="tab-icon fa fa-sun" aria-hidden="true"></i>
+                Light Mode
+            </div>
+            <div class="tab-item dark">
+                <i class="tab-icon fa fa-moon" aria-hidden="true"></i>
+                Dark Mode
+            </div>
+            <div class="line"></div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active">
+                <h2>Light Mode</h2>
+                <h3>Advantages</h3>
+                <ul>
+                    <li>Many web pages, apps, and interfaces will have been optimized for the standard light mode.</li>
+                    <li>If you have standard/normal vision, light visual performance is usually better with light mode.
+                    </li>
+                </ul>
+                <h3>Disadvantages</h3>
+                <ul>
+                    <li>May drain your battery faster than dark mode, depending on your screen.</li>
+                    <li>Not discreet.</li>
+                    <li>More likely to keep you awake if used before sleep because of the amount of ‘blue light’
+                        emitted.</li>
+                </ul>
+            </div>
+            <div class="tab-pane">
+                <h2>Dark Mode</h2>
+                <h3>Advantages</h3>
+                <ul>
+                    <li>May use less energy than light mode allowing your phone battery to last longer.</li>
+                    <li>It can potentially lessen eye strain in low-light conditions.</li>
+                    <li>Suitable for low-light conditions, especially when you don't want your phone to be a beacon of
+                        light, e.g., in bed or a cinema.</li>
+                    <li>Preferably to light mode before you sleep because it emits less 'blue light.'</li>
+                </ul>
+                <h3>Disadvantages</h3>
+                <ul>
+                    <li>The dark mode is not always suitable for eye strain, as text is sometimes washed out against a
+                        dark background.</li>
+                    <li>Less valuable if you are surrounded by bright ambient light
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            const $ = document.querySelector.bind(document);
+            const $$ = document.querySelectorAll.bind(document);
+
+            const tabActive = $(".tab-item.active");
+            const line = $(".tabs .line");
+            const body = $("body");
+            requestIdleCallback(function () {
+                line.style.left = tabActive.offsetLeft + "px";
+                line.style.width = tabActive.offsetWidth + "px";
+            });
+
+            const tabs = $$(".tab-item");
+            const panes = $$('.tab-pane')
+            tabs.forEach((tab, index) => {
+                const pane = panes[index]
+                tab.onclick = function () {
+                    $(".tab-item.active").classList.remove("active");
+                    $(".tab-pane.active").classList.remove("active");
+                    this.classList.add("active");
+                    pane.classList.add('active')
+                    line.style.left = this.offsetLeft + "px";
+                    line.style.width = this.offsetWidth + "px";
+                    if (this.classList[1] === "dark") {
+                        body.classList.add("darkmode");
+                        line.style.backgroundColor = "#fff";
+                    } else {
+                        body.classList.remove("darkmode");
+                        line.style.backgroundColor = "#000";
+                    }
+                };
+            });
+
+        </script>
+</body>
+
+</html>
